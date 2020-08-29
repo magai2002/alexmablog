@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% load static %}
+
+{% if post %}
+  <!-- Page Header -->
+  <header class="masthead" style="background-image: url('{% static 'blog/img/post.jpg' %}')">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="post-heading">
+            <h1>{{ post.title }}</h1>
+            <h2 class="subheading">{{ post.overview }}</h2>
+            <span class="meta">Posted by
+              {{ post.author.first_name }} {{ post.author.last_name }}
+              on {{ post.published_date }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Post Content -->
+  <article>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <p>{{ post.content|safe }}</p>
+        </div>
+        <aside class="col-md-4 blog-sidebar">
+      <div class="p-4 mb-3 bg-light rounded">
+        <h4 class="font-italic">About</h4>
+        <p class="mb-0">You are reading one of my blog posts. If you want to know more about me go <a href="{% url 'about' %}">here.</a> You can also <a href="{% url 'contact' %}">contact me.</a></p>
+      </div>
+
+      <div class="p-4">
+        <h4 class="font-italic">Tag Cloud</h4>
+        <ol class="list-unstyled">
+          {% for cat in cats %}
+          <li><a href="{% url 'categories' cat.pk %}">{{ cat.title }}</a></li>
+          {% endfor %}
+        </ol>
+      </div>
+    </aside>
+      </div>
+      
+    </div>
+  </article>
+
+  <hr>
+
+{% else %}
+
+<header class="masthead" style="background-image: url('{% static 'blog/img/post.jpg' %}')">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="post-heading">
+            <h1>Sorry, this page doesn't exist</h1>
+            <h2 class="subheading">Go read another post :)</h2>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+{% endif %}  
+
+{% endblock %}

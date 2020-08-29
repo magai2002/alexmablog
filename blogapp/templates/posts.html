@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% load static %}
+
+<header class="masthead" style="background-image: url('{% static 'blog/img/posts.jpg' %}')">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="site-heading">
+            <h1>All Posts</h1>
+            <span class="subheading">This is an archive of all posts</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+<div class="container">
+    <div class="row">
+      {% if post_list %}
+      <div class="col-lg-8 col-md-10 mx-auto">
+        {% for post in post_list %}
+        <div class="post-preview">
+          <a href="{% url 'post' post.pk %}">
+            <h2 class="post-title">
+              {{ post.title }}
+            </h2>
+            <h3 class="post-subtitle">
+              {{ post.overview }}
+            </h3>
+          </a>
+          <h5 class="post-meta">
+          {% for cat in post.categories.all %}
+            <a href="{% url 'categories' cat.pk %}">{{ cat }}</a>
+          {% endfor %}
+          </h5>
+          <p class="post-meta">Posted by
+            {{ post.author.first_name }} {{ post.author.last_name }}
+            on {{ post.published_date }}</p>
+        </div>
+        <hr>
+        {% endfor %}
+      {% endif %}
+<!-- Pagination -->
+<nav aria-label="Page navigation example">
+  <ul class="pagination justify-content-center"> 
+    <li class="page-item"><a class="page-link" href="?page=1">&laquo; First</a></li>
+    {% if post_list.has_previous %}
+    <li class="page-item"><a class="page-link" href="?page={{ post_list.previous_page_number }}">back</a></li>
+    {% endif %}
+    <li class="page-link">Page {{ post_list.number }} of {{ post_list.paginator.num_pages }}</li>
+    {% if post_list.has_next %}
+    <li class="page-item"><a class="page-link" href="?page={{ post_list.next_page_number }}">next</a></li>
+    {% endif %}
+    <li class="page-item"><a class="page-link" href="?page={{ post_list.paginator.num_pages }}">&raquo; Last</a></li>
+  </ul>
+</nav>
+  <hr>
+  </div>
+</div>
+
+
+{% endblock %}

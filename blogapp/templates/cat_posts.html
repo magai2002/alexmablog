@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% load static %}
+
+{% if category_posts %}
+<header class="masthead" style="background-image: url('{% static 'blog/img/cat_posts.jpg' %}')">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="site-heading">
+            {% for cat in category %}
+            <h1>{{ cat.title }} posts</h1>
+            <span class="subheading">This is an archive of all {{ cat.title }} posts</span>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+<div class="container">
+    <div class="row">
+      
+      <div class="col-lg-8 col-md-10 mx-auto">
+        {% for post in category_posts %}
+        <div class="post-preview">
+          <a href="{% url 'post' post.pk %}">
+            <h2 class="post-title">
+              {{ post.title }}
+            </h2>
+            <h3 class="post-subtitle">
+              {{ post.overview }}
+            </h3>
+          </a>
+          <h5 class="post-meta">
+          {% for cat in post.categories.all %}
+            <a href="#">{{ cat }}</a>
+          {% endfor %}
+          </h5>
+          <p class="post-meta">Posted by
+            {{ post.author.first_name }} {{ post.author.last_name }}
+            on {{ post.published_date }}</p>
+        </div>
+        <hr>
+        {% endfor %}
+      
+<!-- Pagination -->
+<nav aria-label="Page navigation example">
+  <ul class="pagination justify-content-center"> 
+    <li class="page-item"><a class="page-link" href="?page=1">&laquo; First</a></li>
+    {% if category_posts.has_previous %}
+    <li class="page-item"><a class="page-link" href="?page={{ category_posts.previous_page_number }}">back</a></li>
+    {% endif %}
+    <li class="page-link">Page {{ category_posts.number }} of {{ category_posts.paginator.num_pages }}</li>
+    {% if category_posts.has_next %}
+    <li class="page-item"><a class="page-link" href="?page={{ category_posts.next_page_number }}">next</a></li>
+    {% endif %}
+    <li class="page-item"><a class="page-link" href="?page={{ category_posts.paginator.num_pages }}">&raquo; Last</a></li>
+  </ul>
+</nav>
+  <hr>
+  </div>
+</div>
+
+{% else %}
+
+<header class="masthead" style="background-image: url('{% static 'blog/img/cat_posts.jpg' %}')">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="site-heading">
+            <h1>Sorry, this page does not exist...</h1>
+            <span class="subheading">There are no posts with this category</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+{% endif %}
+
+{% endblock %}

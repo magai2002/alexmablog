@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% load static %}
+
+  <!-- Page Header -->
+  <header class="masthead" style="background-image: url('{% static 'blog/img/about-bg.jpg' %}')">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="page-heading">
+            <h1>About Me</h1>
+            <span class="subheading">This is what I do.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+        <p>Hello and welcome to my blog! My name is Alex and I'm NISK student going into my senior year but apart from school I also learn how to code. Web-development seems particularly interesting to me at the moment.</p>
+        <p>I created this blog application as a part of my learning process, however, that is not the main reason why I built it. With this blog I want to spread knowledge, share my experience, and help students successfully go through high-school.</p>
+        <p>I'm a straight A-student but that doesn't mean I spend all of my time by the books worrying about my grades. I have plenty of free time, during which I play basketball, do morning runs, and watch Netflix. </p>
+      </div>
+    </div>
+  </div>
+
+  <hr>
+
+
+
+{% endblock %}
