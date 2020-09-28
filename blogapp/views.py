@@ -1,4 +1,3 @@
-  
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import render, get_object_or_404
 from .models import Post, Category
@@ -28,7 +27,7 @@ def contact(request):
 			['magaialexey@gmail.com'], #to email
 			)
 
-		return render(request, 'contact.html', {'message_name': message_name})
+		return render(request, 'success.html', {})
 
 	else:
 		return render(request, 'contact.html', {})
