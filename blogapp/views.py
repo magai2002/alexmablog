@@ -1,5 +1,5 @@
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from .models import Post, Category
 from django.core.mail import send_mail
 
@@ -15,22 +15,20 @@ def about(request):
 
 def contact(request):
 	if request.method == "POST":
-		message_name = request.POST['message-name']
-		message_email = request.POST['message-email']
-		message = request.POST['message']
+		message_name = request.POST.get('message-name')
+		message_email = request.POST.get('message-email')
+		message = request.POST.get('message')
 
 		#send email
-		send_mail(
-			'Message from ' + message_name, #subject
-			message, #message
-			message_email, #from email
-			['magaialexey@gmail.com'], #to email
-			)
+		send_mail('Message from ' + message_name, message, message_email, ['magaialexey@gmail.com'],)
 
-		return render(request, 'success.html', {})
+		return redirect('success')
 
-	else:
-		return render(request, 'contact.html', {})
+	return render(request, 'contact.html', {})
+
+
+def success(request):
+	return render(request, 'success.html', {})
 
 
 def posts(request):
